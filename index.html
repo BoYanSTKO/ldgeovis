@@ -4,12 +4,19 @@
   <title>Alexandria Digital Library</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+  <link rel="stylesheet" href="css/jquery-ui.css">
   <link href='css/questrial.css' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/leaflet.css" />
   <link rel="stylesheet" href="css/page.css" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/layers.css" />
   <link rel="stylesheet" href="css/style.css" />
+    <!-- <link rel="stylesheet" href="css/jquery-ui.min.css" /> -->
+  <script src="js/thirdparty/jquery-2.1.1.min.js"></script>
+  <!-- // <script scr="js/jquery-ui.min.js"></script> -->
+
 </head>
 <body>
   <div id="header">
@@ -21,6 +28,23 @@
       
       <!-- <a id="about" href="#">ABOUT</a> -->
   </div>
+  <div id="loginform" title="Please enter the password" >
+    <form action="/login" method="post">
+        <table style="font-size:0.7em;">
+            <tr>
+                <td>Password:</td>
+                <td>
+                    <input name="password" type="password" id="passwordField"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <input type="submit" value="Login" id="submitCredentials"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
   <div id="map"></div>
   <div id="footer">
     <div style="float:right;margin: 6px 10px; color:#666">
@@ -34,13 +58,13 @@
   <div id="sidebar1" class="sidebar">
   <div id="wrapperSideBarExpand"></div>
     <h3>SPARQL Endpoint</h3>
-    <input type="text" id="sparql" class="sbar" value="http://adl-gazetteer.geog.ucsb.edu:8890/sparql" /><br/>
+    <input type="text" id="sparql" class="sbar" value="http://adl-gazetteer.geog.ucsb.edu:8080/repositories/ADL" disabled="true" /><br/>
    <!-- "http://dbpedia.org/sparql -->
     
     <h3>Default Graph</h3>
-    <input type="text" id="graph" class="sbar" value="http://adl-gazetteer.geog.ucsb.edu" /><br/>
+    <input type="text" id="graph" class="sbar" value="http://adl-gazetteer.geog.ucsb.edu" disabled="true" /><br/>
     <h3>Base Type</h3>
-    <input type="text" id="ont" class="sbar" value="http://adl-gazetteer.geog.ucsb.edu/ONT/ADL#mountains" /><br/>
+    <input type="text" id="ont" class="sbar" value="http://adl-gazetteer.geog.ucsb.edu/ONT/ADL#places" disabled="true" /><br/>
     <div class="btn" id="doQuery">QUERY</div>
     <div class="viewQuery" id="viewDoQuery"></div>
   </div>
@@ -83,7 +107,8 @@
  
   
   <!-- CALL SCRIPTS -->
-  <script src="js/thirdparty/jquery-2.1.1.min.js"></script>
+  <!-- // <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
   <script src="js/thirdparty/jstree.min.js"></script>
   <script src="js/thirdparty/leaflet.js"></script>
   <script src='js/thirdparty/leaflet-omnivore.min.js'></script>

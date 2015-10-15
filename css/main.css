@@ -313,3 +313,7 @@ p {
 .eq123:hover {
     border: solid 1px #fff;
 }
+
+table { border-collapse: seperate; border-spacing: 1px; }
+
+table td { padding: 2px; }

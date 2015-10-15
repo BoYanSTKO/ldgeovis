@@ -4,6 +4,10 @@
  * @contact = grant.mckenzie@geog.ucsb.edu
  * @date = October, 2014
  * @lab = http://stko.geog.ucsb.edu
+ ++++++++++++++++++++++++++++++++++++++++++++
+ * Modified by Bo Yan, boyan@geog.ucsb.edu
+ * website: http://geog.ucsb.edu/~boyan
+ * Last modifed on 10/15/2015
  * ======================================== */
 
   // Display the results of the loadClasses ajax call
@@ -15,13 +19,20 @@
       var parents = [];
       var counts = [];
       
+	
       var n = _UTILS.getname(_STKO.endpoints.baseclass, "#");
+//console.log(n);
       data[n.name] = null;
+//console.log(data[n.name]);
       for(var i=0;i<d.length;i++) {
 	  var n = _UTILS.getname(d[i].child.value, "#");
+//console.log(n)
 	  var n2 = _UTILS.getname(d[i].parent.value, "#");
+//console.log(n2)
 	  data[n.name] = n2.name;
-      }
+//console.log(data[n.name])
+      };
+//console.log(data);
       var treedata = parseTree(data);
       
       /* for(var i=0;i<d.length;i++) {
@@ -40,8 +51,10 @@
       $.jstree.destroy();
       
       _STKO.selectedClass = _STKO.endpoints.baseclass;
+//console.log(_STKO.selectedClass);
       $('#subclasses').on('changed.jstree', function (e, data) { 
 	    _STKO.selectedClass = data.node.id;
+// console.log(_STKO.selectedClass)
 	    _UTILS.accordion.expand("properties");
 	    $('#properties').html("<img src='img/loading2.gif' style='margin-left:100px;margin-top:50px;'/>");
 	    _STKO.loadProperties(_STKO.selectedClass);
@@ -89,6 +102,9 @@
       var content = "";
       var ns = [];
       var namespace = [];
+//console.log(d);
+
+     if (d.length >= 1) {  //check if the class has any props
       for(var i=0;i<d.length;i++) {
 	  var li = d[i].prop.value.lastIndexOf('#');
 	  if (li != -1) {
@@ -99,11 +115,11 @@
 	      namespace = loopNameSpaces(ns, n.prefix+"/");
 	  }
 	  
-	  content += _STKO.display.generateParams(namespace[0], namespace[1], n.name, d[i].prop.value, d[i].count.value);
+	  content += _STKO.display.generateParams(namespace[0], namespace[1], n.name, d[i].prop.value);
 	  
 	 
 	  
-      }
+      }}
       $('#properties').html(content);
       
       function loopNameSpaces(ns, uri) {
@@ -139,10 +155,10 @@
   }
   
   
-  _STKO.display.generateParams = function(namespace, uri, name, full, count) {
+  _STKO.display.generateParams = function(namespace, uri, name, full) {
     
     var mainDiv = "<div class='proptext' id='"+namespace+name+"'>";
-      mainDiv += "<div title='"+uri+"' onclick=\"_STKO.loadDateType('"+full+"', '"+namespace+name+"')\">" + namespace + ":" + name + " ("+count+")</div>";
+      mainDiv += "<div title='"+uri+"' onclick=\"_STKO.loadDateType('"+full+"', '"+namespace+name+"')\">" + namespace + ":" + name + "</div>";
       mainDiv += "<div style='color:#333;margin: 3px 0px;display:none' id='sub_"+namespace+name+"_'></div>";
       mainDiv += "<div  class='equals' id='equals_"+namespace+name+"_' style='display:none;'>"
 	mainDiv += "<table id='table_"+namespace+name+"'><tr id='tr_"+namespace+name+"'><td onclick='_UTILS.toggleEquals(\"eq_"+namespace+name+"_\")' id='eq_"+namespace+name+"_' style='font-size:1.3em;width:20px;' class='eq123' title='Click to change condition'>=</td>";

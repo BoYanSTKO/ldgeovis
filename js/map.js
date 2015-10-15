@@ -4,6 +4,10 @@
  * @contact = grant.mckenzie@geog.ucsb.edu
  * @date = October, 2014
  * @lab = http://stko.geog.ucsb.edu
+++++++++++++++++++++++++++++++++++++++++++++
+ * Modified by Bo Yan, boyan@geog.ucsb.edu
+ * website: http://geog.ucsb.edu/~boyan
+ * Last modifed on 10/15/2015
  * ======================================== */
 
   _MAP.markers = [];
@@ -27,10 +31,14 @@
       });
     
   }
-  
+// var fieldNumber = 0;
+// var dispPopup = false;  
   _MAP.displayPopup = function(d, id) {
+  	// dispPopup = true;
       var content = "";
       var ns = [];
+      // fieldNumber = d.length;
+      // console.log(fieldNumber);
       for(var i=0;i<d.length;i++) {
 	  var li = d[i].a.value.lastIndexOf('#');
 	  var sub = "";
@@ -41,7 +49,7 @@
 	    var n = _UTILS.getname(d[i].a.value, "/");
 	    var namespace = loopNameSpaces(ns, n.prefix+"/");
 	  }
-	  content += "<span title='"+namespace[1]+"'>" + namespace[0] + ":"+n.name+"</span>: <span class='subprop'>" + d[i].b.value + "</span><br/>";
+	  content += "<span title='"+namespace[1]+"'>" + namespace[0] + ":"+n.name+"</span>: <span class='subprop'>" + d[i].b.value + "</span>  <button class='fieldEdit' type='submit' disabled='true'>Edit</button><br/>";
       }
       $('#pop'+id).html(content);
       // slightly offset the center so the entire popup can be seen.	
@@ -66,23 +74,29 @@
   _MAP.showMarkerPopup = function(i, uri) {
       this.markers[i].openPopup();
       _STKO.loadDetails(uri, i);
+      // dispPopup = true;
   }
   
   _MAP.mapEntities = function(m) {
+  	// console.log(m);
       this.markers = [];
       if(this.map.hasLayer(this.groupLayer)) {
 	  this.map.removeLayer(this.groupLayer);
       }
+      // console.log("123");
       var markericon = L.icon({iconUrl: "img/marker_"+_STKO.layers.layers[_STKO.layers.activeLayer].color+".png", iconSize:[25, 34], iconAnchor:[12, 33], popupAnchor:[0, -20]});
+      // console.log(m.length);
       for(var i=0;i<m.length;i++) {
+      	// console.log(i);
 	  
 	  var point = L.marker([m[i].lat.value, m[i].long.value], {icon: markericon});
+	  // console.log(point);
 	  // TO DO. Currently only takes the first point geometry.  Should take all an possibly map to polygon?
 	 
 	  //var point = omnivore.wkt.parse(geo);
 	  var popupOptions = {'minWidth': '800','maxWidth': '600',  'closeButton': true}
 	  
-	  point.bindPopup("<b>"+decodeURIComponent(m[i].a.value)+"</b><br/><div id='pop"+i+"' class='popupdiv'><img src='img/loading.gif' style='margin-left:380px;margin-top:100px'/></div>", popupOptions);
+	  point.bindPopup("<b>"+decodeURIComponent(m[i].a.value)+"</b> <button id='turnOnEdit' type='submit'>Turn Editing On</button><br/><div id='pop"+i+"' class='popupdiv'><img src='img/loading.gif' style='margin-left:380px;margin-top:100px'/></div>", popupOptions);
 	  point.urig = m[i].a.value;
 	  point.idg = i;
 	  point.graph = _STKO.layers.layers[_STKO.layers.activeLayer].graph;
@@ -97,4 +111,27 @@
    
      
   }
+
+  // $(function(){
+
+
+  // // 	// console.log("test");
+  // // 	// $('#fieldEdit').each(function(i, obj){
+  // //  //      console.log(i);
+  // //  //      // $('#fieldEdit' + i).html('Save');
+  // //  //      $(this).on('click', function(){
+  // //  //      	$(this).html('Save');
+  // //  //      });
+  // // $('.fieldEdit').on('click', function(){
+  // // 	for (var i=0;i<fieldNumber;i++) {
+  // // 		if ($('.fieldEdit').attr('id') == ("'" + i + "'")){
+  // // 			$(".fieldEdit[id='" + i + "']").html("save");
+  // // 		};
+  // // 	};
+
+  // // });
+  // 	});
+
+
+
   
